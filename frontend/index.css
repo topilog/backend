@@ -1,0 +1,41 @@
+body {
+    background-color: #f6f6f6;
+}
+
+#header {
+    width: 100%;
+}
+#header-nav {
+    width: 1000px;
+    margin: 10px auto;
+}
+#header-nav {
+    display: flex;
+    list-style-type: none;
+}
+.header-nav-item {
+    padding: 0 18px;
+}
+
+#container {
+    align-content: center;
+}
+
+#main {
+    width: 1000px;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+
+#feed-div {
+    width: 694px;
+    border: 1px;
+    background-color: #ffffff;
+}
+
+#side-div {
+    display: block;
+    width: 296px;
+    border: 1px;
+}
