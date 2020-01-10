@@ -15,6 +15,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 public class ArticleContent extends BaseModel implements Serializable {
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 }
