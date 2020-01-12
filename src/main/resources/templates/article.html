@@ -17,7 +17,7 @@
     <script src="https://cdn.bootcss.com/showdown/1.3.0/showdown.min.js"></script>
     <script type="text/javascript" th:inline="javascript">
         var content =[[${article_content}]];
-        var converter = new showdown.Converter(); //初始化转换器
+        var converter = new showdown.Converter({tables:true}); //初始化转换器
         var htmlContent  = converter.makeHtml(content); //将MarkDown转为html格式的内容
         console.log(htmlContent);
         document.getElementById("article").innerHTML = htmlContent;

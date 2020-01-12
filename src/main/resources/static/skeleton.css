@@ -1,20 +1,34 @@
 body {
     background-color: #f6f6f6;
+    font-size: 15px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    color: aquamarine;
 }
 
 #header {
     width: 100%;
+    background: #ffffff;
+    z-index: 100;
+    position: relative;
 }
 #header-nav {
     width: 1000px;
+    height: 52px;
     margin: 10px auto;
-}
-#header-nav {
     display: flex;
+    align-items: center;
     list-style-type: none;
 }
 .header-nav-item {
     padding: 0 18px;
+    font-size: 15px;
 }
 
 #container {
@@ -28,7 +42,16 @@ body {
     margin: 10px auto;
 }
 
-#feed-div {
+.Card {
+    background: #ffffff;
+}
+
+.MainColumnCard {
+    box-shadow: none;
+    border-bottom: 1px solid #f0f2f7;
+}
+
+#MainContent {
     width: 694px;
     border: 1px;
     background-color: #ffffff;

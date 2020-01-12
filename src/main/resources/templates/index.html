@@ -9,9 +9,9 @@
 </head>
 <body>
     <div layout:fragment="main-content">
-        <article class="feed-item" th:each="article:${articles}">
-            <h1 th:text="${article.title}">文章标题</h1>
-            <p th:text="${article.summary}">文章简短说明</p>
+        <article class="Card MainColumnCard" th:each="article:${articles}">
+            <a th:href="'/article/'+${article.id}"><h1 th:text="${article.title}">文章标题</h1></a>
+            <a th:href="'/article/'+${article.id}"><p th:text="${article.summary}">文章简短说明</p></a>
         </article>
     </div>
 </body>
