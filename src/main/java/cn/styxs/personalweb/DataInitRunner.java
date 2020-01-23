@@ -3,8 +3,8 @@ package cn.styxs.personalweb;
 import cn.styxs.personalweb.model.ArticleContent;
 import cn.styxs.personalweb.model.ArticleInfo;
 import cn.styxs.personalweb.model.NavTabItem;
-import cn.styxs.personalweb.repository.ArticleInfoRepository;
 import cn.styxs.personalweb.repository.NavTabItemRepository;
+import cn.styxs.personalweb.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @Component
 public class DataInitRunner implements ApplicationRunner {
     @Autowired
-    ArticleInfoRepository articleInfoRepository;
+    ArticleService articleService;
     @Autowired
     NavTabItemRepository navTabItemRepository;
 
@@ -26,12 +26,14 @@ public class DataInitRunner implements ApplicationRunner {
     }
 
     private void initTestArticle() {
-        ArrayList<ArticleInfo> list = new ArrayList<>();
-        list.add(ArticleInfo.builder().title("文章1").summary("内容说明1")
-                .artContent(ArticleContent.builder().content("# Hello Markdown!").build()).build());
-        list.add(ArticleInfo.builder().title("文章2").summary("内容说明2")
-                .artContent(ArticleContent.builder().content("| 行1  | 行2  |\n| ---- | ---- |\n| 1    | 2    |").build()).build());
-        articleInfoRepository.saveAll(list);
+        if (articleService.getArticleNums() == 0) {
+            ArrayList<ArticleInfo> list = new ArrayList<>();
+            list.add(ArticleInfo.builder().title("文章1").summary("内容说明1")
+                    .artContent(ArticleContent.builder().content("# Hello Markdown!").build()).build());
+            list.add(ArticleInfo.builder().title("文章2").summary("内容说明2")
+                    .artContent(ArticleContent.builder().content("| 行1  | 行2  |\n| ---- | ---- |\n| 1    | 2    |").build()).build());
+            articleService.addArticleInfos(list);
+        }
     }
 
     private void initNavTabItem() {

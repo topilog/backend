@@ -17,8 +17,6 @@ public class SkeletonController {
 
     @ModelAttribute(name = "navTabItems")
     public List<NavTabItem> getNavTabItems() {
-        ArrayList<NavTabItem> tabItems = new ArrayList<>();
-        navTabItemRepository.findAll().forEach(item -> tabItems.add(item));
-        return tabItems;
+        return navTabItemRepository.findAllByOrderById();
     }
 }

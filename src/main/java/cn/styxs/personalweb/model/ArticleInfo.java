@@ -1,5 +1,6 @@
 package cn.styxs.personalweb.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,15 +16,20 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ArticleInfo extends BaseModel implements Serializable {
-    @Column(name = "title")
+    public static final int kArticleTitleLength = 80;
+    public static final int kArticleSummaryLength = 600;
+
+
+    @Column(name = "title", length = kArticleTitleLength)
     private String title;
-    @Column(name = "summary")
+    @Column(name = "summary", length = kArticleSummaryLength)
     private String summary;
     @Column(name = "articleModified")
     private Date articleModifiedTime;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "article_content_id")
+    @JsonIgnore
     private ArticleContent artContent;
     @ManyToMany
     @JoinTable(name = "article_article_tag")
