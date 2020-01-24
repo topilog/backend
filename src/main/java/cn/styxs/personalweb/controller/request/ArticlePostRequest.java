@@ -2,6 +2,7 @@ package cn.styxs.personalweb.controller.request;
 
 import cn.styxs.personalweb.model.ArticleContent;
 import cn.styxs.personalweb.model.ArticleInfo;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,11 +15,15 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 public class ArticlePostRequest extends UserRequest {
+    @ApiModelProperty(value = "文章标题", required = true)
     @NotNull
     String title;
+    @ApiModelProperty(value = "文章内容", required = true)
     @NotNull
     String content;
+    @ApiModelProperty(value = "文章展示摘要", required = false)
     String summary;
+    @ApiModelProperty(value = "文章分类数组", notes = "如果是目前不存在的分类将自动创建新分类")
     List<String> tags;
 
     public ArticleInfo make() {
