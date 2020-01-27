@@ -8,5 +8,4 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserRequest {
-    public String token;
 }

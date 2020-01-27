@@ -1,5 +1,6 @@
 package cn.styxs.personalweb.controller;
 
+import cn.styxs.personalweb.annotation.LoginRequired;
 import cn.styxs.personalweb.model.ArticleInfo;
 import cn.styxs.personalweb.repository.ArticleInfoRepository;
 import lombok.extern.log4j.Log4j;

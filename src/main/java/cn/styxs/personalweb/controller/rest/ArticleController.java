@@ -1,19 +1,16 @@
 package cn.styxs.personalweb.controller.rest;
 
+import cn.styxs.personalweb.annotation.LoginRequired;
 import cn.styxs.personalweb.controller.request.ArticlePostRequest;
 import cn.styxs.personalweb.model.ArticleContent;
 import cn.styxs.personalweb.model.ArticleInfo;
 import cn.styxs.personalweb.service.ArticleService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -41,6 +38,7 @@ public class ArticleController {
     }
 
     @RequestMapping(path = "/article", method = {RequestMethod.POST})
+    @LoginRequired
     @ApiOperation(value = "提交新文章")
     public ArticleInfo postArticle(@RequestBody ArticlePostRequest postRequest) {
         ArticleInfo info = postRequest.make();
