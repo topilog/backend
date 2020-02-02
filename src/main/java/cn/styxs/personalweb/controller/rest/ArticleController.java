@@ -1,6 +1,8 @@
 package cn.styxs.personalweb.controller.rest;
 
+import cn.styxs.personalweb.annotation.EnablePermission;
 import cn.styxs.personalweb.annotation.LoginRequired;
+import cn.styxs.personalweb.annotation.PermissionRequired;
 import cn.styxs.personalweb.controller.request.ArticlePostRequest;
 import cn.styxs.personalweb.controller.response.ContentResponse;
 import cn.styxs.personalweb.model.ArticleContent;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/article")
+@EnablePermission
 @Slf4j
 public class ArticleController {
     @Autowired
@@ -45,7 +48,7 @@ public class ArticleController {
     }
 
     @RequestMapping(path = "/article", method = {RequestMethod.POST})
-    @LoginRequired
+    @PermissionRequired(description = "提交文章权限")
     @ApiOperation(value = "提交新文章")
     public ContentResponse postArticle(@RequestBody ArticlePostRequest postRequest) {
         ArticleInfo info = postRequest.make();
