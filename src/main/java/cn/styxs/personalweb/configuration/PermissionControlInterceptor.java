@@ -44,7 +44,8 @@ public class PermissionControlInterceptor implements HandlerInterceptor {
                 mapper.writeValue(response.getWriter(), baseResponse);
                 log.info("User: "+username+" intercepted " +permissionName);
             }
+            return false;
         }
-        return false;
+        return true;
     }
 }
