@@ -1,6 +1,7 @@
 package cn.styxs.personalweb.model;
 
 import cn.styxs.personalweb.annotation.PermissionRequired;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,9 +21,11 @@ public class Permission extends BaseModel{
     @Column
     private String description;
 
-    @ManyToMany(mappedBy = "permissions", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "permissions")
+    @JsonIgnore
     private List<Role> belongRoles;
 
+    // 根据类-方法信息生成权限名
     public static String getPermissionName(Method method, PermissionRequired permissionRequired) {
         String name = permissionRequired.permissionName();
         if ("".equals(name) || name == null) {

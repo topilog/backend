@@ -22,26 +22,34 @@ public class PermissionService {
     @Autowired
     UserRepository userRepository;
 
+    // 查看指定权限是否存在，不存在则插入
+    // 返回是否插入
     public boolean verifyAndInsertPermission(Permission permission) {
-        if (!permissionRepository.existsByName(permission.getName())) {
-            permissionRepository.save(permission);
-            return true;
+        if (permission != null) {
+            String permissionName = permission.getName();
+            if (permissionName != null && !"".equals(permissionName)) {
+                if (!permissionRepository.existsByName(permission.getName())) {
+                    permissionRepository.save(permission);
+                    return true;
+                }
+            }
         }
         return false;
     }
 
+    // 查看用户是否拥有指定权限
     public boolean isUserHasPermission(String username, String permissionName) {
+        if (username == null || permissionName == null) {
+            return false;
+        }
         User user = userRepository.findUserByUsername(username);
-        log.info(user+" "+permissionName);
+        if(user == null || user.getRoles() == null)
+            return false;
         Permission permission = permissionRepository.findByBelongRolesInAndNameEquals(user.getRoles(), permissionName);
-        log.info(user.toString());
-        log.info(permissionName);
-        log.info(permission.toString());
-        if (permission != null)
-            return true;
-        return false;
+        return permission != null;
     }
 
+    // 列出系统中所有权限
     public List<Permission> listPermissions() {
         return permissionRepository.findAllByOrderById();
     }

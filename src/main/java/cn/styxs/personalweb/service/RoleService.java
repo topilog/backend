@@ -20,26 +20,41 @@ public class RoleService {
     @Autowired
     UserRepository userRepository;
 
-    public Role createRole(String roleName) {
+    public boolean createRole(String roleName) {
         Role role = Role.builder().roleName(roleName).build();
-        return roleRepository.save(role);
-    }
-
-    @Transactional
-    public Role addPermissions(String roleName, List<Permission> permissions) {
-        Role role = roleRepository.findByRoleName(roleName);
-        role.getPermissions().addAll(permissions);
         roleRepository.save(role);
-        log.info(role.toString());
-        return role;
+        return true;
     }
 
     @Transactional
-    public User addRolesToUser(String username, String roleName) {
+    public boolean addPermission(String roleName, Permission permission) {
+        Role role = roleRepository.findByRoleName(roleName);
+        if (role == null)
+            return false;
+        role.addPermission(permission);
+        roleRepository.save(role);
+        return true;
+    }
+
+    @Transactional
+    public boolean addPermissions(String roleName, List<Permission> permissions) {
+        Role role = roleRepository.findByRoleName(roleName);
+        if (role == null)
+            return false;
+        role.addPermissions(permissions);
+        roleRepository.save(role);
+        return true;
+    }
+
+    @Transactional
+    public boolean addRolesToUser(String username, String roleName) {
         Role role = roleRepository.findByRoleName(roleName);
         User user = userRepository.findUserByUsername(username);
-        user.getRoles().add(role);
+        if (role == null || user == null || user.getRoles() == null) {
+            return false;
+        }
+        user.addRole(role);
         userRepository.save(user);
-        return user;
+        return true;
     }
 }
