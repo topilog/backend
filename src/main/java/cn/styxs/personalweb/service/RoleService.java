@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/*
+    RBAC权限模型之角色 Service
+ */
 @Service
 @Slf4j
 public class RoleService {
@@ -20,12 +23,19 @@ public class RoleService {
     @Autowired
     UserRepository userRepository;
 
+    /*
+        创建一个权限角色
+     */
     public boolean createRole(String roleName) {
         Role role = Role.builder().roleName(roleName).build();
         roleRepository.save(role);
         return true;
     }
 
+    /*
+        为角色添加一个权限
+        返回值表示是否成功添加
+     */
     @Transactional
     public boolean addPermission(String roleName, Permission permission) {
         Role role = roleRepository.findByRoleName(roleName);
@@ -36,6 +46,10 @@ public class RoleService {
         return true;
     }
 
+    /*
+        为角色添加多个权限
+        返回值表示是否成功添加
+     */
     @Transactional
     public boolean addPermissions(String roleName, List<Permission> permissions) {
         Role role = roleRepository.findByRoleName(roleName);
@@ -46,6 +60,10 @@ public class RoleService {
         return true;
     }
 
+    /*
+        为某个用户添加一个角色
+        返回值表示是否成功添加
+     */
     @Transactional
     public boolean addRolesToUser(String username, String roleName) {
         Role role = roleRepository.findByRoleName(roleName);
