@@ -19,6 +19,9 @@ public class UserService {
     UserRepository userRepository;
     Random random = new SecureRandom();
 
+    /*
+        获取某用户的盐值
+     */
     public String getUserSalt(String username) {
         User user = userRepository.findUserByUsername(username);
         if (user == null)
@@ -40,11 +43,18 @@ public class UserService {
         return 0;
     }
 
+    /*
+        判断用户(名)是否已存在
+     */
     public boolean isUserExist(String username) {
         User user = userRepository.findUserByUsername(username);
         return user!=null;
     }
 
+    /*
+        创建一个用户
+        返回值 0-成功 1-用户名不合法 2-用户名已存在 3-其他问题
+     */
     public int createUser(String username, String password, String salt) {
         if (checkUsername(username)!=0) {
             return 1;
@@ -56,6 +66,10 @@ public class UserService {
         return 0;
     }
 
+    /*
+        验证用户名-密码是否匹配
+        (注意数据库中存储的是加盐后的密码)
+     */
     public boolean verifyUser(String username, String passwordWithSalt) {
         User user = userRepository.findUserByUsername(username);
         if (user != null && user.getPassword() != null) {
@@ -68,6 +82,10 @@ public class UserService {
 
     private HashMap<String, String> keep_login = new HashMap<>();
     private HashMap<String, String> username_token = new HashMap<>();
+    /*
+        使指定用户登录
+        返回值为token串
+     */
     public String keepLogin(String username) {
         // 禁止重复登录
         if (username_token.get(username) != null) {
@@ -78,6 +96,11 @@ public class UserService {
         return token;
     }
 
+    /*
+        验证token对应的用户是否登录
+        返回值为对应的用户名
+        无对应用户则返回null
+     */
     public String verifyLogin(String token) {
         if (keep_login.containsKey(token)) {
             return keep_login.get(token);
@@ -85,6 +108,9 @@ public class UserService {
         return null;
     }
 
+    /*
+        生成一串盐值
+     */
     public String genSalt() {
         byte[] salt = new byte[24];
         random.nextBytes(salt);
