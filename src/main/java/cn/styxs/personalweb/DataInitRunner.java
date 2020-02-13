@@ -3,7 +3,6 @@ package cn.styxs.personalweb;
 import cn.styxs.personalweb.model.ArticleContent;
 import cn.styxs.personalweb.model.ArticleInfo;
 import cn.styxs.personalweb.model.NavTabItem;
-import cn.styxs.personalweb.repository.NavTabItemRepository;
 import cn.styxs.personalweb.service.ArticleService;
 import cn.styxs.personalweb.service.PermissionService;
 import cn.styxs.personalweb.service.RoleService;
@@ -19,13 +18,10 @@ import java.util.ArrayList;
 public class DataInitRunner implements ApplicationRunner {
     @Autowired
     ArticleService articleService;
-    @Autowired
-    NavTabItemRepository navTabItemRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         initTestArticle();
-        initNavTabItem();
         initRBAC();
     }
 
@@ -38,15 +34,6 @@ public class DataInitRunner implements ApplicationRunner {
             list.add(ArticleInfo.builder().title("文章2").summary("内容说明2")
                     .artContent(ArticleContent.builder().content("| 行1  | 行2  |\n| ---- | ---- |\n| 1    | 2    |").build()).build());
             articleService.addArticleInfos(list);
-        }
-    }
-
-    // 创建初始Tab列表
-    private void initNavTabItem() {
-        if (navTabItemRepository.count() == 0) {
-            navTabItemRepository.save(NavTabItem.builder().title("首页").navigateToUrl("/").build());
-            navTabItemRepository.save(NavTabItem.builder().title("栏目").navigateToUrl("/tags").build());
-            navTabItemRepository.save(NavTabItem.builder().title("关于").navigateToUrl("/about").build());
         }
     }
 

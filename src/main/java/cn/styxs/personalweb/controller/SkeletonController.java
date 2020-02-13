@@ -1,22 +1,36 @@
 package cn.styxs.personalweb.controller;
 
 import cn.styxs.personalweb.model.NavTabItem;
-import cn.styxs.personalweb.repository.NavTabItemRepository;
+import cn.styxs.personalweb.model.SiteConfig;
+import cn.styxs.personalweb.service.ConfigService;
+import cn.styxs.personalweb.service.NavService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @ControllerAdvice
 public class SkeletonController {
     @Autowired
-    NavTabItemRepository navTabItemRepository;
+    NavService navService;
+    @Autowired
+    ConfigService configService;
 
     @ModelAttribute(name = "navTabItems")
     public List<NavTabItem> getNavTabItems() {
-        return navTabItemRepository.findAllByOrderById();
+        return navService.getTabItems();
     }
+
+    @ModelAttribute(name = "siteName")
+    public String getSiteTitle() {
+        return configService.getSiteConfig().getSiteName();
+    }
+
+    @ModelAttribute(name = "siteCopyright")
+    public String getSiteCopyRight() {
+        return configService.getSiteConfig().getCopyright();
+    }
+
 }
