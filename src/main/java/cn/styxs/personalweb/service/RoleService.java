@@ -27,6 +27,9 @@ public class RoleService {
         创建一个权限角色
      */
     public boolean createRole(String roleName) {
+        if (roleName == null || "".equals(roleName)) {
+            return false;
+        }
         Role role = Role.builder().roleName(roleName).build();
         roleRepository.save(role);
         return true;
@@ -38,6 +41,9 @@ public class RoleService {
      */
     @Transactional
     public boolean addPermission(String roleName, Permission permission) {
+        if (roleName == null || permission == null) {
+            return false;
+        }
         Role role = roleRepository.findByRoleName(roleName);
         if (role == null)
             return false;
@@ -52,6 +58,9 @@ public class RoleService {
      */
     @Transactional
     public boolean addPermissions(String roleName, List<Permission> permissions) {
+        if (roleName == null || permissions == null) {
+            return  false;
+        }
         Role role = roleRepository.findByRoleName(roleName);
         if (role == null)
             return false;
@@ -66,6 +75,9 @@ public class RoleService {
      */
     @Transactional
     public boolean addRolesToUser(String username, String roleName) {
+        if (username == null || roleName == null) {
+            return false;
+        }
         Role role = roleRepository.findByRoleName(roleName);
         User user = userRepository.findUserByUsername(username);
         if (role == null || user == null || user.getRoles() == null) {
