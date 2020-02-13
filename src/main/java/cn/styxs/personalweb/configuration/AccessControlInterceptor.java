@@ -5,6 +5,7 @@ import cn.styxs.personalweb.controller.response.BaseResponse;
 import cn.styxs.personalweb.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,8 +28,8 @@ public class AccessControlInterceptor implements HandlerInterceptor {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
             Class declaringClass = method.getDeclaringClass();
-            LoginRequired classRequired = (LoginRequired) declaringClass.getDeclaredAnnotation(LoginRequired.class);
-            LoginRequired methodRequired = method.getAnnotation(LoginRequired.class);
+            LoginRequired classRequired = AnnotationUtils.findAnnotation(declaringClass, LoginRequired.class);
+            LoginRequired methodRequired = AnnotationUtils.findAnnotation(method, LoginRequired.class);
             if ((methodRequired != null && methodRequired.value() == true)
                     || ((classRequired != null && classRequired.value() == true) && (methodRequired == null || methodRequired.value() == true))) {
                 if (!checkLogin(request)) {

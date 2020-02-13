@@ -3,9 +3,9 @@ package cn.styxs.personalweb.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -21,4 +21,18 @@ public class User extends BaseModel {
     private String password;
     @Column
     private String salt;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role")
+    private List<Role> roles;
+
+    public void addRole(Role role) {
+        if (role != null) {
+            if (roles == null) {
+                roles = new ArrayList<>();
+            }
+            roles.add(role);
+        }
+    }
+
 }

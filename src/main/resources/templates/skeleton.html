@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/skeleton.css">
-    <title>模板标题</title>
+    <title th:text="${siteName}" layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">网页名称</title>
 </head>
 <body>
 <header id="header">
@@ -28,7 +28,7 @@
         <div id="side-div">
             <div layout:fragment="side-content"></div>
             <footer id="footer">
-                <p>Copyright&copy;2020 StyxS</p>
+                <p th:utext="${siteCopyright}">Copyright&copy;2020 StyxS</p>
                 <p>Powered by <a href="https://github.com/Styx-S">StyxS</a>, <a href="https://github.com/NaHCO3">NaHCO3</a></p>
             </footer>
         </div>
