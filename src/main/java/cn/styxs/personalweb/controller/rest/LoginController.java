@@ -1,7 +1,6 @@
 package cn.styxs.personalweb.controller.rest;
 
-import cn.styxs.personalweb.controller.response.LoginResponse;
-import cn.styxs.personalweb.controller.response.SaltResponse;
+import cn.styxs.personalweb.controller.response.BaseResponse;
 import cn.styxs.personalweb.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -23,18 +22,16 @@ public class LoginController {
     @RequestMapping(value = "/salt", method = {RequestMethod.GET})
     @ApiOperation(value = "请求用户的salt值", notes = "不带参数为请求公共salt值")
     @ApiImplicitParam(name = "username", value = "用户名")
-    public SaltResponse getSalt(@RequestParam(value = "username", defaultValue = "")String username) {
-        SaltResponse saltResponse = new SaltResponse();
+    public BaseResponse<String> getSalt(@RequestParam(value = "username", defaultValue = "")String username) {
+        BaseResponse<String> saltResponse = new BaseResponse<>();
         if ("".equals(username)) {
-            saltResponse.setSalt(userService.genSalt());
-            saltResponse.succeed();
+            saltResponse.succeed(userService.genSalt());
         } else {
             String userSalt = userService.getUserSalt(username);
             if (userSalt == null) {
                 saltResponse.failed("can't find user by this username", 1);
             } else {
-                saltResponse.setSalt(userSalt);
-                saltResponse.succeed();
+                saltResponse.succeed(userSalt);
             }
         }
         return saltResponse;
@@ -47,16 +44,15 @@ public class LoginController {
             @ApiImplicitParam(name = "password", value = "加盐后口令"),
             @ApiImplicitParam(name = "salt", value = "salt值")
     })
-    public LoginResponse register(@RequestParam(value = "username")String username,
-                                  @RequestParam(value = "password")String password,
-                                  @RequestParam(value = "salt")String salt, HttpServletRequest request) {
-        LoginResponse loginResponse = new LoginResponse();
+    public BaseResponse register(@RequestParam(value = "username")String username,
+                                 @RequestParam(value = "password")String password,
+                                 @RequestParam(value = "salt")String salt, HttpServletRequest request) {
+        BaseResponse<String> loginResponse = new BaseResponse<>();
         int code = userService.createUser(username, password, salt);
         if (code == 0) {
             String token = userService.keepLogin(username);
             request.getSession().setAttribute(UserService.kTokenAttributeName, token);
-            loginResponse.setToken(token);
-            loginResponse.succeed();
+            loginResponse.succeed(token);
         } else {
             loginResponse.failed("failed", code);
         }
@@ -69,14 +65,13 @@ public class LoginController {
             @ApiImplicitParam(name = "username", value = "用户名"),
             @ApiImplicitParam(name = "password", value = "加盐后口令")
     })
-    public LoginResponse login(@RequestParam(value = "username")String username,
+    public BaseResponse<String> login(@RequestParam(value = "username")String username,
                                @RequestParam(value = "password")String password, HttpServletRequest request) {
-        LoginResponse loginResponse = new LoginResponse();
+        BaseResponse<String> loginResponse = new BaseResponse<>();
         if (userService.verifyUser(username, password)) {
             String token = userService.keepLogin(username);
             request.getSession().setAttribute(UserService.kTokenAttributeName, token);
-            loginResponse.setToken(token);
-            loginResponse.succeed();
+            loginResponse.succeed(token);
         } else {
             loginResponse.failed("can't verify user", 1);
         }
