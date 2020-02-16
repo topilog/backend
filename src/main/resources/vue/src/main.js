@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import Axios from 'axios'
 Vue.prototype.$axios = Axios
+Vue.prototype.$url = "http://localhost:8080"
 
 Vue.config.productionTip = false
 
@@ -13,10 +14,5 @@ new Vue({
   el: '#app',
   router,
   components: { App },
-  template: '<App/>',
-  mounted: function () {
-    this.$axios.get('http://localhost:8080/api/article/infos').then(function (res) {
-      console.log(res)
-    })
-  }
+  template: '<App/>'
 })
