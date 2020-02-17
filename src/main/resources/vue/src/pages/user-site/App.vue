@@ -6,7 +6,7 @@
 
 <script>
 import mainPage from "@/components/mainPage"
-import Nav from "./components/Nav"
+import Nav from "@/components/Nav"
 export default {
   name: 'App',
   components:{
