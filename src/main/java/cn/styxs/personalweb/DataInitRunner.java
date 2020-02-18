@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 一些基础数据的插入在这里进行，后续可能考虑移除
+ */
 @Component
 public class DataInitRunner implements ApplicationRunner {
     @Autowired

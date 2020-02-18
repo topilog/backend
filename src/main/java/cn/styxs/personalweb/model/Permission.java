@@ -8,6 +8,11 @@ import javax.persistence.*;
 import java.lang.reflect.Method;
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: RBAC模型之权限类
+ */
 @Entity
 @Table(name = "permission")
 @Data

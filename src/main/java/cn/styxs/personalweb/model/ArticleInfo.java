@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 存储文章信息(不包括文章具体内容)
+ */
 @Entity
 @Table(name = "article_info")
 @Data

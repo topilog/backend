@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 保存站点设置
+ */
 @Getter
 @ToString
 public class SiteConfig {

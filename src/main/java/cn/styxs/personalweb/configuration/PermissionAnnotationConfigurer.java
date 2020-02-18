@@ -14,8 +14,10 @@ import org.springframework.core.annotation.AnnotationUtils;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-/*
-    用于发现所有权限名并添加到数据库当中
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 在这里发现所有权限名：扫描所有具有PermissionRequired注释的接口，插入权限名到数据库中
  */
 @Configuration
 @Slf4j

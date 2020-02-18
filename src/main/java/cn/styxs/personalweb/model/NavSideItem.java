@@ -8,6 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 侧边栏；目前未使用
+ */
 @Entity
 @Table(name = "nav_side")
 @Builder

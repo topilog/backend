@@ -8,6 +8,11 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description:
+ */
 public interface PermissionRepository extends CrudRepository<Permission, Long> {
     boolean existsByName(String name);
 

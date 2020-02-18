@@ -4,6 +4,11 @@ import lombok.*;
 
 import javax.persistence.Column;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 导航栏
+ */
 @Builder
 @Data
 @ToString(callSuper = true)
