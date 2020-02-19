@@ -6,6 +6,11 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: RBAC模型之角色类
+ */
 @Entity
 @Table(name = "role")
 @Data

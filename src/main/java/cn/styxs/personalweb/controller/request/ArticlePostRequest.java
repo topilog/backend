@@ -11,6 +11,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 提交文章接口所需的参数类
+ */
 @Getter
 @Setter
 @ToString(callSuper = true)

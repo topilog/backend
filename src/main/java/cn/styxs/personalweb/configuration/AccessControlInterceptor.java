@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 访问控制器，用于登录验证
+ */
 @Slf4j
 public class AccessControlInterceptor implements HandlerInterceptor {
     private UserService userService;

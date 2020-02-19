@@ -2,11 +2,11 @@ package cn.styxs.personalweb.annotation;
 
 import java.lang.annotation.*;
 
-/*
-* 标识一个方法需要登录
-* 未登录的请求将直接被拦截
-* */
-
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 该注解表明方法需要登录;未登录的请求应当被拦截
+ */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LoginRequired {

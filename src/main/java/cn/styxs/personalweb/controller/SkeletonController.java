@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 用于传递Thymeleaf引擎所需要公共部分数据，例如导航栏、站点名字、Footer中内容等
+ */
 @ControllerAdvice
 public class SkeletonController {
     @Autowired

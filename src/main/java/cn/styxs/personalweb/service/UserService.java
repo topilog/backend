@@ -11,6 +11,11 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 提供用户相关功能
+ */
 @Service
 public class UserService {
     public static final String kTokenAttributeName = "token";

@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Method;
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 提供权限相关功能(权限部分还依赖于RoleService)
+ */
 @Service
 @Slf4j
 public class PermissionService {

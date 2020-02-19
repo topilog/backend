@@ -10,6 +10,11 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 提供导航栏相关功能
+ */
 @Service
 @Slf4j
 public class NavService {

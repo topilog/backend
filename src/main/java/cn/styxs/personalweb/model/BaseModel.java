@@ -9,6 +9,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 基础Entity, 所有Entity应当继承这个；提供id、创建时间、最近修改时间字段
+ */
 @MappedSuperclass
 @Data
 @NoArgsConstructor

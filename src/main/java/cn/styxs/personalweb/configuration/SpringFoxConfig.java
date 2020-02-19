@@ -9,6 +9,11 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 配置生成Swagger文档
+ */
 @Configuration
 @EnableSwagger2
 public class SpringFoxConfig {
