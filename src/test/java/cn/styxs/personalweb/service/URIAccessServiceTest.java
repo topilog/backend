@@ -33,7 +33,7 @@ class URIAccessServiceTest {
     public void testPermission() {
         String message = "Test uri need Permission Error";
         uriAccessService.addRuleForPermission("/admin/*", "SuperAdmin");
-        Assert.isTrue(!uriAccessService.canAccessWithOutPermission("/admin/a"), message);
+        Assert.isTrue(!uriAccessService.canAccessWithoutPermission("/admin/a"), message);
         Assert.isTrue("SuperAdmin".equals(uriAccessService.getPermissionWithURI("/admin/a")), message);
     }
 }

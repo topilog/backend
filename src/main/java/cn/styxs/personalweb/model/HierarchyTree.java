@@ -56,14 +56,11 @@ public class HierarchyTree<T>{
         String[] hierarchy = uri.split("/");
         TreeNode<T> curr = root;
         for (String s : hierarchy) {
-            switch (containsChildHierarchy(curr, s)) {
-                case -1:
-                    return null;
-                case 1:
-                    return curr;
-                case 0:
-                    curr = curr.childNodeMap.get(s);
-                    continue;
+            curr = getChild(curr, s);
+            if (curr == null || curr.val.equals("*")) {
+                // 无法匹配，返回null
+                // *只能出现在末尾，立即返回
+                break;
             }
         }
         return curr;
@@ -87,5 +84,17 @@ public class HierarchyTree<T>{
         newNode.extra = extra;
         node.childNodeMap.put(str, newNode);
         return newNode;
+    }
+
+    private TreeNode<T> getChild(TreeNode<T> node, String str) {
+        switch (containsChildHierarchy(node, str)) {
+            case 0:
+                return node.childNodeMap.get(str);
+            case 1:
+                // 如果是通过*匹配，需要取*节点而不是str节点
+                return node.childNodeMap.get("*");
+            default:
+                return null;
+        }
     }
 }

@@ -1,19 +1,15 @@
 package cn.styxs.personalweb.configuration;
 
 import cn.styxs.personalweb.annotation.PermissionRequired;
-import cn.styxs.personalweb.controller.response.BaseResponse;
 import cn.styxs.personalweb.model.Permission;
 import cn.styxs.personalweb.service.PermissionService;
 import cn.styxs.personalweb.service.URIAccessService;
 import cn.styxs.personalweb.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @Author: StyxS
@@ -46,7 +42,7 @@ public class PermissionControlInterceptor extends CustomInterceptor{
             return allow;
         } else {
             String uri = request.getRequestURI();
-            if (!uriAccessService.canAccessWithOutPermission(uri)) {
+            if (!uriAccessService.canAccessWithoutPermission(uri)) {
                 String permissionName = uriAccessService.getPermissionWithURI(uri);
                 boolean allow = permissionService.isUserHasPermission(username, permissionName);
                 if (!allow) {

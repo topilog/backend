@@ -22,7 +22,7 @@ public class URIAccessService {
     }
 
     // 判断一个URI是否可以以无权限状态访问
-    public boolean canAccessWithOutPermission(String uri) {
+    public boolean canAccessWithoutPermission(String uri) {
         return !permissionInterceptedTree.matchRule(uri);
     }
 
