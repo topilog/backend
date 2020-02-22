@@ -2,6 +2,8 @@ package cn.styxs.personalweb.configuration;
 
 import cn.styxs.personalweb.annotation.LoginRequired;
 import cn.styxs.personalweb.controller.response.BaseResponse;
+import cn.styxs.personalweb.service.PermissionService;
+import cn.styxs.personalweb.service.URIAccessService;
 import cn.styxs.personalweb.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +22,9 @@ import java.lang.reflect.Method;
  * @Description: 访问控制器，用于登录验证
  */
 @Slf4j
-public class AccessControlInterceptor implements HandlerInterceptor {
-    private UserService userService;
-    public AccessControlInterceptor(UserService userService) {
-        this.userService = userService;
+public class AccessControlInterceptor extends CustomInterceptor{
+    public AccessControlInterceptor(URIAccessService uriAccessService, UserService userService) {
+        super(uriAccessService, userService);
     }
 
     @Override
@@ -37,29 +38,31 @@ public class AccessControlInterceptor implements HandlerInterceptor {
             LoginRequired methodRequired = AnnotationUtils.findAnnotation(method, LoginRequired.class);
             if ((methodRequired != null && methodRequired.value() == true)
                     || ((classRequired != null && classRequired.value() == true) && (methodRequired == null || methodRequired.value() == true))) {
-                if (!checkLogin(request)) {
+                if (getUsernameFromRequest(request) == null) {
                     notifyNeedLogin(request, response, declaringClass.getAnnotation(RestController.class) != null);
+                    log(false);
+                    return false;
+                }
+            }
+        } else {
+            String uri = request.getRequestURI();
+            if (!uriAccessService.canAccessWithoutLogin(uri)) {
+                if (getUsernameFromRequest(request) == null) {
+                    notifyNeedLogin(request, response, false);
+                    log(false);
                     return false;
                 }
             }
         }
+        log(true);
         return true;
-    }
-
-    private boolean checkLogin(HttpServletRequest request) {
-        String token = (String)request.getSession().getAttribute(UserService.kTokenAttributeName);
-        return userService.verifyLogin(token) != null;
     }
 
     private void notifyNeedLogin(HttpServletRequest request,HttpServletResponse response, boolean rest) throws Exception {
         if (rest) {
-            ObjectMapper mapper = new ObjectMapper();
-            BaseResponse baseResponse = new BaseResponse();
-            baseResponse.throwout("need login", 1);
-            mapper.writeValue(response.getWriter(), baseResponse);
+            out(response, "need login", 1);
         } else {
             response.sendRedirect("/user/login?source="+request.getRequestURI());
         }
     }
-
 }

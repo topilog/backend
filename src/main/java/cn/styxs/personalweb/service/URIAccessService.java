@@ -16,24 +16,29 @@ public class URIAccessService {
     HierarchyTree<Object> loginInterceptedTree = new HierarchyTree<>();
     HierarchyTree<String> permissionInterceptedTree = new HierarchyTree<>();
 
+    // 判断一个URI是否可以以非登录状态访问
     public boolean canAccessWithoutLogin(String uri) {
         return !loginInterceptedTree.matchRule(uri);
     }
 
-    public boolean canAccessWithPermission(String uri) {
+    // 判断一个URI是否可以以无权限状态访问
+    public boolean canAccessWithOutPermission(String uri) {
         return !permissionInterceptedTree.matchRule(uri);
     }
 
+    // 获取一个URI所需的权限名
     public String getPermissionWithURI(String uri) {
         if (permissionInterceptedTree.matchRule(uri)) {
             return permissionInterceptedTree.getExtra(uri);
         } else return null;
     }
 
+    // 为URI添加一个登录限制规则
     public void addRuleForLogin(String uri) {
         loginInterceptedTree.addRule(uri, null);
     }
 
+    // 为URI添加一个权限限制规则
     public void addRuleForPermission(String uri, String permissionName) {
         permissionInterceptedTree.addRule(uri, permissionName);
     }
