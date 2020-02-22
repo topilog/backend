@@ -20,10 +20,10 @@ public class HierarchyTree<T>{
         例如: 支持 /user/* ； 不支持 /user/a*
         同时 /user 规则不会拦截 /user/login
      */
-    public void addRule(String rule, T extra) throws IllegalArgumentException{
-        // SpringBoot 中通过Request.getURI()取到的URI以'/'开头，所以这里要求给定的rule也必须以'/'开头
-        if (rule.length() < 1 && rule.indexOf(0) != '/') {
-            throw new IllegalArgumentException("the rule must start with a \'/\'");
+    public void addRule(String rule, T extra) {
+        if (rule.charAt(0) == '/') {
+            // 以/开头将导致有一个val为空的节点，统一去除
+            rule = rule.substring(1);
         }
         String[] hierarchy = rule.split("/");
         if (hierarchy[hierarchy.length - 1].equals("*"));
@@ -53,6 +53,9 @@ public class HierarchyTree<T>{
     }
 
     private TreeNode<T> findNode(String uri) {
+        if (uri.charAt(0) == '/') {
+            uri = uri.substring(1);
+        }
         String[] hierarchy = uri.split("/");
         TreeNode<T> curr = root;
         for (String s : hierarchy) {
