@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * @Author: styxs
  * @CreateTime: 2020/2/21
@@ -20,22 +18,22 @@ class URIAccessServiceTest {
     @Test
     public void testLogin() {
         String message = "Test uri need Login error";
-        uriAccessService.addRuleForLogin("user/profile");
-        uriAccessService.addRuleForLogin("needLogin/*");
+        uriAccessService.addRuleForLogin("/user/profile");
+        uriAccessService.addRuleForLogin("/needLogin/*");
 
-        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("user/profile"), message);
-        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("user/profile/"), message);
-        Assert.isTrue(uriAccessService.canAccessWithoutLogin("user/login"), message);
-        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("needLogin/aaa"), message);
-        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("needLogin/aaa/bbb"), message);
-        Assert.isTrue(uriAccessService.canAccessWithoutLogin("url/"), message);
+        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("/user/profile"), message);
+        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("/user/profile/"), message);
+        Assert.isTrue(uriAccessService.canAccessWithoutLogin("/user/login"), message);
+        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("/needLogin/aaa"), message);
+        Assert.isTrue(!uriAccessService.canAccessWithoutLogin("/needLogin/aaa/bbb"), message);
+        Assert.isTrue(uriAccessService.canAccessWithoutLogin("/url/"), message);
     }
 
     @Test
     public void testPermission() {
         String message = "Test uri need Permission Error";
-        uriAccessService.addRuleForPermission("admin/*", "SuperAdmin");
-        Assert.isTrue(!uriAccessService.canAccessWithPermission("admin/a"), message);
-        Assert.isTrue("SuperAdmin".equals(uriAccessService.getPermissionWithURI("admin/a")), message);
+        uriAccessService.addRuleForPermission("/admin/*", "SuperAdmin");
+        Assert.isTrue(!uriAccessService.canAccessWithOutPermission("/admin/a"), message);
+        Assert.isTrue("SuperAdmin".equals(uriAccessService.getPermissionWithURI("/admin/a")), message);
     }
 }
