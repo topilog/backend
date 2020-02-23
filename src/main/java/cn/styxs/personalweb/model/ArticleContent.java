@@ -7,6 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 存储文章具体内容
+ */
 @Entity
 @Table(name = "article_content")
 @Data

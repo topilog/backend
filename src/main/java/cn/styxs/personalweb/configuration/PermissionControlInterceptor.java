@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 权限拦截器，拦截访问带PermissionRequired注解的接口但不具有对应权限的请求
+ */
 @Slf4j
 public class PermissionControlInterceptor implements HandlerInterceptor {
     PermissionService permissionService;

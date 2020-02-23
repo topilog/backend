@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/*
-    RBAC权限模型之角色 Service
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 提供权限相关功能
  */
 @Service
 @Slf4j

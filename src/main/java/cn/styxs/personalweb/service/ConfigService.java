@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
+/**
+ * @Author: StyxS
+ * @CreateTime: 2020/2/18
+ * @Description: 提供站点配置相关功能
+ */
 @Service
 @Slf4j
 public class ConfigService {
