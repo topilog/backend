@@ -26,7 +26,6 @@ public class HierarchyTree<T>{
             rule = rule.substring(1);
         }
         String[] hierarchy = rule.split("/");
-        if (hierarchy[hierarchy.length - 1].equals("*"));
         TreeNode<T> curr = root;
         for(String s : hierarchy) {
             switch (containsChildHierarchy(curr, s)) {

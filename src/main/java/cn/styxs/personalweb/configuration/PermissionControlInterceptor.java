@@ -27,7 +27,7 @@ public class PermissionControlInterceptor extends CustomInterceptor{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String username = userService.verifyLogin((String) request.getSession().getAttribute(UserService.kTokenAttributeName));
+        String username = getUsernameFromRequest(request);
         if (handler instanceof HandlerMethod) {
             PermissionRequired permissionRequired = ((HandlerMethod) handler).getMethodAnnotation(PermissionRequired.class);
             if (permissionRequired == null)
