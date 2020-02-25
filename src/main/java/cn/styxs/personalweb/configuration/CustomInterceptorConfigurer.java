@@ -1,6 +1,7 @@
 package cn.styxs.personalweb.configuration;
 
 import cn.styxs.personalweb.service.PermissionService;
+import cn.styxs.personalweb.service.URIAccessService;
 import cn.styxs.personalweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +19,12 @@ public class CustomInterceptorConfigurer implements WebMvcConfigurer {
     UserService userService;
     @Autowired
     PermissionService permissionService;
+    @Autowired
+    URIAccessService uriAccessService;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AccessControlInterceptor(userService)).addPathPatterns("/**");
-        registry.addInterceptor(new PermissionControlInterceptor(userService, permissionService)).addPathPatterns("/**");
+        registry.addInterceptor(new AccessControlInterceptor(uriAccessService, userService)).addPathPatterns("/**");
+        registry.addInterceptor(new PermissionControlInterceptor(uriAccessService, userService, permissionService)).addPathPatterns("/**");
     }
 }
