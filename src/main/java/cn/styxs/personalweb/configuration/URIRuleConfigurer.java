@@ -22,6 +22,6 @@ public class URIRuleConfigurer {
 
 
         // ------ 添加权限URI规则------
-        uriAccessService.addRuleForPermission("/admin", "admin");
+        uriAccessService.addRuleForPermission("/admin.html", "admin");
     }
 }
