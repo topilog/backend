@@ -40,6 +40,10 @@ public class URIAccessService {
 
     // 为URI添加一个权限限制规则
     public void addRuleForPermission(String uri, String permissionName) {
+        if (!loginInterceptedTree.matchRule(uri)) {
+            // 拦截器层要求权限限制必须先限制登录
+            loginInterceptedTree.addRule(uri, null);
+        }
         permissionInterceptedTree.addRule(uri, permissionName);
     }
 }
