@@ -1,14 +1,14 @@
 <template>
 <div>
-  <div id="MainPage">
-  MainPage
+  <div id="NotFoundComponent">
+    404
   </div>
 </div>
 </template>
 
 <script>
     export default {
-        name: "MainPage"
+        name: "NotFoundComponent"
     }
     
 </script>

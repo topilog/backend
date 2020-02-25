@@ -6,7 +6,6 @@
           <button v-if="items[index].title == '361'">111</button>
       </div>
   </div>
-  <div class="nav"></div>
 </div>
 </template>
 
@@ -29,9 +28,5 @@ export default {
 </script>
 
 <style>
-    .nav{
-        height: 5000px;
-        width: 500px;
-        background-color: olive
-    }
+
 </style>
