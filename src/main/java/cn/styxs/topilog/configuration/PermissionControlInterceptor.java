@@ -2,6 +2,7 @@ package cn.styxs.topilog.configuration;
 
 import cn.styxs.topilog.annotation.PermissionRequired;
 import cn.styxs.topilog.model.Permission;
+import cn.styxs.topilog.model.ErrorCode;
 import cn.styxs.topilog.service.PermissionService;
 import cn.styxs.topilog.service.URIAccessService;
 import cn.styxs.topilog.service.UserService;
@@ -46,7 +47,7 @@ public class PermissionControlInterceptor extends CustomInterceptor{
                 String permissionName = uriAccessService.getPermissionWithURI(uri);
                 boolean allow = permissionService.isUserHasPermission(username, permissionName);
                 if (!allow) {
-                    out(response, "need permission", 2);
+                    out(response, "need permission", ErrorCode.BaseLayerCode.kNeedPermission);
                 }
                 logP(allow, username, permissionName, uri);
                 return allow;

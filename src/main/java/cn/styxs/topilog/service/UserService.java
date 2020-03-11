@@ -1,6 +1,6 @@
 package cn.styxs.topilog.service;
 
-import cn.styxs.topilog.model.User;
+import cn.styxs.topilog.model.ErrorCode;
 import cn.styxs.topilog.repository.UserRepository;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class UserService {
         获取某用户的盐值
      */
     public String getUserSalt(String username) {
-        User user = userRepository.findUserByUsername(username);
+        cn.styxs.topilog.model.User user = userRepository.findUserByUsername(username);
         if (user == null)
             return null;
         if (user.getSalt() == null) {
@@ -52,7 +52,7 @@ public class UserService {
         判断用户(名)是否已存在
      */
     public boolean isUserExist(String username) {
-        User user = userRepository.findUserByUsername(username);
+        cn.styxs.topilog.model.User user = userRepository.findUserByUsername(username);
         return user!=null;
     }
 
@@ -62,11 +62,11 @@ public class UserService {
      */
     public int createUser(String username, String password, String salt) {
         if (checkUsername(username)!=0) {
-            return 1;
+            return ErrorCode.User.kInvalidUsername;
         } else if (isUserExist(username)) {
-            return 2;
-        } if (userRepository.save(User.builder().username(username).password(password).salt(salt).build()) == null) {
-            return 3;
+            return ErrorCode.User.kUsernameHasExisted;
+        } if (userRepository.save(cn.styxs.topilog.model.User.builder().username(username).password(password).salt(salt).build()) == null) {
+            return ErrorCode.User.kRegisterError;
         }
         return 0;
     }
@@ -76,7 +76,7 @@ public class UserService {
         (注意数据库中存储的是加盐后的密码)
      */
     public boolean verifyUser(String username, String passwordWithSalt) {
-        User user = userRepository.findUserByUsername(username);
+        cn.styxs.topilog.model.User user = userRepository.findUserByUsername(username);
         if (user != null && user.getPassword() != null) {
             if (user.getPassword().equals(passwordWithSalt)) {
                 return true;

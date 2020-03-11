@@ -1,6 +1,7 @@
 package cn.styxs.topilog.configuration;
 
 import cn.styxs.topilog.annotation.LoginRequired;
+import cn.styxs.topilog.model.ErrorCode;
 import cn.styxs.topilog.service.URIAccessService;
 import cn.styxs.topilog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,7 @@ public class AccessControlInterceptor extends CustomInterceptor{
 
     private void notifyNeedLogin(HttpServletRequest request,HttpServletResponse response, boolean rest) throws Exception {
         if (rest) {
-            out(response, "need login", 1);
+            out(response, "need login", ErrorCode.BaseLayerCode.kNeedLogin);
         } else {
             response.sendRedirect("/user/login?source="+request.getRequestURI());
         }

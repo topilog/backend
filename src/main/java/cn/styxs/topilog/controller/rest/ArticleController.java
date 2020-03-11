@@ -6,6 +6,7 @@ import cn.styxs.topilog.controller.request.ArticlePostRequest;
 import cn.styxs.topilog.controller.response.BaseResponse;
 import cn.styxs.topilog.model.ArticleContent;
 import cn.styxs.topilog.model.ArticleInfo;
+import cn.styxs.topilog.model.ErrorCode.Article;
 import cn.styxs.topilog.service.ArticleService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -36,10 +37,16 @@ public class ArticleController {
     @ApiImplicitParam(name = "articleId", value = "文章id", required = true)
     public BaseResponse getArticleInfo(@RequestParam(value = "articleId", defaultValue = "-1") Long articleId) {
         BaseResponse<ArticleInfo> response = new BaseResponse<>();
-        if (articleId == -1)
-            response.failed("do not have articleId", 1);
+        if (articleId == -1) {
+            response.failed("do not have articleId", Article.kArticleIdError);
+        }
         else {
-            response.succeed(articleService.getArticleInfo(articleId));
+            ArticleInfo articleInfo = articleService.getArticleInfo(articleId);
+            if (articleInfo == null) {
+                response.failed("can't find any article by this id", Article.kArticleIdError);
+            } else {
+                response.succeed(articleInfo);
+            }
         }
         return response;
     }
@@ -62,9 +69,14 @@ public class ArticleController {
     public BaseResponse getArticleContent(@RequestParam(value = "articleId", defaultValue = "-1") Long articleId) {
         BaseResponse<ArticleContent> response = new BaseResponse<>();
         if (articleId == -1)
-            response.failed("do not have articleId", 1);
+            response.failed("do not have articleId", Article.kArticleIdError);
         else {
-            response.succeed(articleService.getArticleInfo(articleId).getArtContent());
+            ArticleContent articleContent = articleService.getArticleInfo(articleId).getArtContent();
+            if (articleContent == null) {
+                response.failed("can't find any content by this id", Article.kArticleIdError);
+            } else {
+                response.succeed(articleContent);
+            }
         }
         return response;
     }

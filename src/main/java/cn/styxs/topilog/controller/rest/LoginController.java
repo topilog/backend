@@ -1,6 +1,7 @@
 package cn.styxs.topilog.controller.rest;
 
 import cn.styxs.topilog.controller.response.BaseResponse;
+import cn.styxs.topilog.model.ErrorCode.User;
 import cn.styxs.topilog.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -29,7 +30,7 @@ public class LoginController {
         } else {
             String userSalt = userService.getUserSalt(username);
             if (userSalt == null) {
-                saltResponse.failed("can't find user by this username", 1);
+                saltResponse.failed("can't find user by this username", User.kUsernameNotExisted);
             } else {
                 saltResponse.succeed(userSalt);
             }
@@ -73,7 +74,7 @@ public class LoginController {
             request.getSession().setAttribute(UserService.kTokenAttributeName, token);
             loginResponse.succeed(token);
         } else {
-            loginResponse.failed("can't verify user", 1);
+            loginResponse.failed("can't verify user", User.kLoginError);
         }
         return loginResponse;
     }
