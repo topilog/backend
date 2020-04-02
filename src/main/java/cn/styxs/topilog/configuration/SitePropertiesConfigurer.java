@@ -1,6 +1,6 @@
 package cn.styxs.topilog.configuration;
 
-import cn.styxs.topilog.model.SiteConfig;
+import cn.styxs.topilog.model.SiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +16,8 @@ import org.springframework.context.annotation.PropertySource;
 @Slf4j
 public class SitePropertiesConfigurer {
     @Bean
-    public SiteConfig siteConfig() {
-        SiteConfig siteConfig = new SiteConfig();
-        return siteConfig;
+    public SiteInfo siteConfig() {
+        SiteInfo siteInfo = new SiteInfo();
+        return siteInfo;
     }
 }

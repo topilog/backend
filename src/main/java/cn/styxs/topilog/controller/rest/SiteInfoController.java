@@ -1,25 +1,24 @@
 package cn.styxs.topilog.controller.rest;
 
 import cn.styxs.topilog.controller.response.BaseResponse;
-import cn.styxs.topilog.model.NavTabItem;
-import cn.styxs.topilog.service.NavService;
+import cn.styxs.topilog.model.SiteInfo;
+import cn.styxs.topilog.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 
 @RestController
-public class NavController {
+public class SiteInfoController {
     @Autowired
-    NavService navService;
+    ConfigService configService;
 
-    @RequestMapping(value = "/nav", method = {RequestMethod.GET})
-    public BaseResponse<List<NavTabItem>> getNavList() {
-        BaseResponse<List<NavTabItem>> response = new BaseResponse<>();
-        response.succeed(navService.getTabItems());
+    @RequestMapping(value = "/site/info", method = {RequestMethod.GET})
+    public BaseResponse<SiteInfo> getSiteInfo() {
+        BaseResponse<SiteInfo> response = new BaseResponse<>();
+        response.succeed(configService.getSiteInfo());
         return response;
     }
 }

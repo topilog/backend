@@ -1,6 +1,6 @@
 package cn.styxs.topilog.service;
 
-import cn.styxs.topilog.model.SiteConfig;
+import cn.styxs.topilog.model.SiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ class ConfigServiceTest {
 
     @Test
     public void testSiteConfigModel() {
-        SiteConfig siteConfig = configService.getSiteConfig();
-        Assert.notNull(siteConfig, "can't get siteConfig");
-        Assert.notNull(siteConfig.getSiteName(), "siteName can't be null");
-        log.info(siteConfig.toString());
+        SiteInfo siteInfo = configService.getSiteInfo();
+        Assert.notNull(siteInfo, "can't get siteConfig");
+        Assert.notNull(siteInfo.getSiteName(), "siteName can't be null");
+        log.info(siteInfo.toString());
     }
 }

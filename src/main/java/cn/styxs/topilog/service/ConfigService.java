@@ -1,6 +1,6 @@
 package cn.styxs.topilog.service;
 
-import cn.styxs.topilog.model.SiteConfig;
+import cn.styxs.topilog.model.SiteInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +16,14 @@ import javax.annotation.PostConstruct;
 @Slf4j
 public class ConfigService {
     @Autowired
-    SiteConfig siteConfig;
+    SiteInfo siteInfo;
 
     @PostConstruct
     public void logSiteConfig() {
-        log.info(siteConfig.toString());
+        log.info(siteInfo.toString());
     }
 
-    public SiteConfig getSiteConfig() {
-        return siteConfig;
+    public SiteInfo getSiteInfo() {
+        return siteInfo;
     }
 }
