@@ -49,7 +49,7 @@ public class DataInitRunner implements ApplicationRunner {
     PermissionService permissionService;
     // 创建测试用户-权限-权限组
     private void initRBAC() {
-        userService.createUser("adminUser", "12345", "0");
+        userService.createUser("adminUser", "7092bff34d3d18e83dad9c4c7e78ff19", "V-w25dm9tDjF2pNyBiN7_F0pc3om5N4C");
         roleService.createRole("superAdmin");
         roleService.addPermissions("superAdmin", permissionService.listPermissions());
         roleService.addRolesToUser("adminUser", "superAdmin");
