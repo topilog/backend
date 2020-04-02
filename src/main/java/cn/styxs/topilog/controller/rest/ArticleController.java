@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -54,7 +55,7 @@ public class ArticleController {
     @RequestMapping(path = "/article", method = {RequestMethod.POST})
     @PermissionRequired(description = "提交文章权限")
     @ApiOperation(value = "提交新文章")
-    public BaseResponse postArticle(@RequestBody ArticlePostRequest postRequest) {
+    public BaseResponse postArticle(@RequestBody @Valid ArticlePostRequest postRequest) {
         ArticleInfo info = postRequest.make();
         info.setTags(articleService.convertTags(postRequest.getTags()));
         articleService.addArticleInfo(info);
