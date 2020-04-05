@@ -1,6 +1,7 @@
 package cn.styxs.topilog.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,9 +33,9 @@ public class ArticleInfo extends BaseModel implements Serializable {
     @Column(name = "articleModified")
     private Date articleModifiedTime;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "article_content_id")
-    @JsonIgnore
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private ArticleContent artContent;
     @ManyToMany
     @JoinTable(name = "article_article_tag")

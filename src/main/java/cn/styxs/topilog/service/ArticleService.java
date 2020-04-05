@@ -7,6 +7,7 @@ import cn.styxs.topilog.repository.ArticleTagRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Optional;
  * @Description: 提供Article相关功能
  */
 @Service
+@Transactional
 @Slf4j
 public class ArticleService {
     @Autowired
@@ -46,6 +48,16 @@ public class ArticleService {
         Optional<ArticleInfo> info = infoRepository.findById(id);
         if (info.isPresent()) {
             return info.get();
+        }
+        return null;
+    }
+
+    public ArticleInfo getArticleContent(Long id) {
+        Optional<ArticleInfo> info = infoRepository.findById(id);
+        if (info.isPresent()) {
+            ArticleInfo infoContent = info.get();
+            infoContent.getArtContent().getModifiedTime(); // 触发懒加载
+            return infoContent;
         }
         return null;
     }

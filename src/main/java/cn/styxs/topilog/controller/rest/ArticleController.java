@@ -36,7 +36,7 @@ public class ArticleController {
     @RequestMapping(path = "/info", method = {RequestMethod.GET})
     @ApiOperation(value = "获取某篇文章信息", notes = "不包含文章内容信息")
     @ApiImplicitParam(name = "articleId", value = "文章id", required = true)
-    public BaseResponse getArticleInfo(@RequestParam(value = "articleId", defaultValue = "-1") Long articleId) {
+    public BaseResponse<ArticleInfo> getArticleInfo(@RequestParam(value = "articleId", defaultValue = "-1") Long articleId) {
         BaseResponse<ArticleInfo> response = new BaseResponse<>();
         if (articleId == -1) {
             response.failed("do not have articleId", Article.kArticleIdError);
@@ -55,7 +55,7 @@ public class ArticleController {
     @RequestMapping(path = "/article", method = {RequestMethod.POST})
     @PermissionRequired(description = "提交文章权限")
     @ApiOperation(value = "提交新文章")
-    public BaseResponse postArticle(@RequestBody @Valid ArticlePostRequest postRequest) {
+    public BaseResponse<ArticleInfo> postArticle(@RequestBody @Valid ArticlePostRequest postRequest) {
         ArticleInfo info = postRequest.make();
         info.setTags(articleService.convertTags(postRequest.getTags()));
         articleService.addArticleInfo(info);
@@ -65,18 +65,18 @@ public class ArticleController {
     }
 
     @RequestMapping(path = "/article", method = {RequestMethod.GET})
-    @ApiOperation(value = "获取文章具体内容", notes = "Markdown格式内容")
+    @ApiOperation(value = "获取文章具体内容", notes = "返回为包含Content部分的ArticleInfo模型")
     @ApiImplicitParam(name = "articleId", value = "文章id", required = true)
-    public BaseResponse getArticleContent(@RequestParam(value = "articleId", defaultValue = "-1") Long articleId) {
-        BaseResponse<ArticleContent> response = new BaseResponse<>();
+    public BaseResponse<ArticleInfo> getArticleContent(@RequestParam(value = "articleId", defaultValue = "-1") Long articleId) {
+        BaseResponse<ArticleInfo> response = new BaseResponse<>();
         if (articleId == -1)
             response.failed("do not have articleId", Article.kArticleIdError);
         else {
-            ArticleContent articleContent = articleService.getArticleInfo(articleId).getArtContent();
-            if (articleContent == null) {
+            ArticleInfo infoContent = articleService.getArticleContent(articleId);
+            if (infoContent == null) {
                 response.failed("can't find any content by this id", Article.kArticleIdError);
             } else {
-                response.succeed(articleContent);
+                response.succeed(infoContent);
             }
         }
         return response;
