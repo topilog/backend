@@ -1,5 +1,6 @@
-package cn.styxs.topilog.model;
+package cn.styxs.topilog.model.article;
 
+import cn.styxs.topilog.model.BaseModel;
 import lombok.*;
 
 import javax.persistence.Entity;

@@ -1,7 +1,7 @@
 package cn.styxs.topilog.controller.request;
 
-import cn.styxs.topilog.model.ArticleContent;
-import cn.styxs.topilog.model.ArticleInfo;
+import cn.styxs.topilog.model.article.ArticleContent;
+import cn.styxs.topilog.model.article.ArticleInfo;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;

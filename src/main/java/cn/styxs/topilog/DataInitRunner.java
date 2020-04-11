@@ -1,7 +1,7 @@
 package cn.styxs.topilog;
 
-import cn.styxs.topilog.model.ArticleContent;
-import cn.styxs.topilog.model.ArticleInfo;
+import cn.styxs.topilog.model.article.ArticleContent;
+import cn.styxs.topilog.model.article.ArticleInfo;
 import cn.styxs.topilog.service.ArticleService;
 import cn.styxs.topilog.service.PermissionService;
 import cn.styxs.topilog.service.RoleService;

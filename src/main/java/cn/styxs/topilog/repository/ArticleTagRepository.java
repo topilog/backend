@@ -1,6 +1,6 @@
 package cn.styxs.topilog.repository;
 
-import cn.styxs.topilog.model.ArticleTag;
+import cn.styxs.topilog.model.article.ArticleTag;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,11 +1,15 @@
 package cn.styxs.topilog.service;
 
-import cn.styxs.topilog.model.ArticleInfo;
-import cn.styxs.topilog.model.ArticleTag;
+import cn.styxs.topilog.model.OffsetPage;
+import cn.styxs.topilog.model.article.ArticleInfo;
+import cn.styxs.topilog.model.article.ArticleTag;
+import cn.styxs.topilog.model.article.TopArticle;
 import cn.styxs.topilog.repository.ArticleInfoRepository;
 import cn.styxs.topilog.repository.ArticleTagRepository;
+import cn.styxs.topilog.repository.TopArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +30,8 @@ public class ArticleService {
     ArticleInfoRepository infoRepository;
     @Autowired
     ArticleTagRepository tagRepository;
+    @Autowired
+    TopArticleRepository topArticleRepository;
 
 
     public long getArticleNums() {
@@ -34,6 +40,61 @@ public class ArticleService {
 
     public List<ArticleInfo> getArticleInfos() {
         return infoRepository.findAllByOrderByCreateTime();
+    }
+
+    // 分页查询文章信息列表
+    public List<ArticleInfo> getArticleInfos(Integer currentPage, Integer pageSize) {
+        // 置顶逻辑
+        List<Long> topArticleIds = topArticleRepository.queryTopArticleAIds();
+        ArrayList<ArticleInfo> result = new ArrayList();
+        int topNums = topArticleIds.size();
+        int l = currentPage * pageSize;
+        int r = l + pageSize;
+        if (topNums == 0) {
+            // 当topArticleIds为空时拿进repository查询会有问题
+            result.addAll(infoRepository.findAllBy(new OffsetPage(l, pageSize)).getContent());
+        } else if (topNums < l) {
+            // 当前页完全无置顶文章
+            int offset = l - topNums;
+            Page<ArticleInfo> page = infoRepository.findAllByIdNotIn(topArticleIds, new OffsetPage(offset, pageSize));
+            result.addAll(page
+                    .getContent());
+        } else if (topNums >= l && topNums < r) {
+            // 当前页有部分置顶文章
+            result.addAll(infoRepository.findAllByIdIsIn(topArticleIds.subList(l, topNums)));
+            result.addAll(infoRepository.findAllByIdNotIn(topArticleIds, new OffsetPage(0, r - topNums))
+                    .getContent());
+        } else {
+            // 当前页全是置顶文章
+            result.addAll(infoRepository.findAllByIdIsIn(topArticleIds.subList(l, r)));
+        }
+        return result;
+    }
+
+    public int getArticlePageCount(Integer pageSize) {
+        return  (int) Math.ceil(((double)infoRepository.count()) / pageSize);
+    }
+
+    // 设置某篇文章的置顶标记
+    public boolean setArticleTop(Long aid, boolean top) {
+        ArticleInfo articleInfo = infoRepository.findById(aid).get();
+        if (articleInfo == null) {
+            return false;
+        }
+        if (top) {
+            if (topArticleRepository.existsByArticleInfo(articleInfo)) {
+                return false;
+            }
+            TopArticle topArticle = new TopArticle(articleInfo);
+            topArticleRepository.save(topArticle);
+        } else {
+            TopArticle topArticle = topArticleRepository.findByArticleInfo(articleInfo);
+            if (topArticle == null) {
+                return false;
+            }
+            topArticleRepository.delete(topArticle);
+        }
+        return true;
     }
 
     public void addArticleInfo(ArticleInfo articleInfo) {

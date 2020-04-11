@@ -1,6 +1,6 @@
-package cn.styxs.topilog.model;
+package cn.styxs.topilog.model.article;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import cn.styxs.topilog.model.BaseModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 

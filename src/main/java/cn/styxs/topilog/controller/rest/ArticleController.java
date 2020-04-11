@@ -3,9 +3,9 @@ package cn.styxs.topilog.controller.rest;
 import cn.styxs.topilog.annotation.EnablePermission;
 import cn.styxs.topilog.annotation.PermissionRequired;
 import cn.styxs.topilog.controller.request.ArticlePostRequest;
+import cn.styxs.topilog.controller.response.ArticlePageResp;
 import cn.styxs.topilog.controller.response.BaseResponse;
-import cn.styxs.topilog.model.ArticleContent;
-import cn.styxs.topilog.model.ArticleInfo;
+import cn.styxs.topilog.model.article.ArticleInfo;
 import cn.styxs.topilog.model.ErrorCode.Article;
 import cn.styxs.topilog.service.ArticleService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -26,10 +26,23 @@ public class ArticleController {
     ArticleService articleService;
 
     @RequestMapping(path = "/infos", method = {RequestMethod.GET})
-    @ApiOperation(value = "拉取所有文章信息", notes = "不包含文章内容信息")
+    @ApiOperation(value = "拉取所有文章信息（权限）", notes = "不包含文章内容信息")
+    @PermissionRequired(description = "拉取所有文章权限")
     public BaseResponse<List<ArticleInfo>> listArticleInfos() {
         BaseResponse<List<ArticleInfo>> response = new BaseResponse<>();
         response.succeed(articleService.getArticleInfos());
+        return response;
+    }
+
+    @RequestMapping(path = "/infos/page", method = {RequestMethod.GET})
+    @ApiOperation(value = "按分页拉取文章信息列表", notes = "不包含文章内容信息")
+    public BaseResponse<ArticlePageResp> listArticleInfosByPage(@RequestParam(value = "page") @Valid int pageIndex,
+                                                                @RequestParam(value = "size", defaultValue = "10") int pageSize) {
+        BaseResponse<ArticlePageResp> response = new BaseResponse<>();
+        ArticlePageResp resp = ArticlePageResp.builder().currentPage(pageIndex).pageSize(pageSize)
+                .pageLength(articleService.getArticlePageCount(pageSize))
+                .articleInfos(articleService.getArticleInfos(pageIndex, pageSize)).build();
+        response.succeed(resp);
         return response;
     }
 
@@ -78,6 +91,20 @@ public class ArticleController {
             } else {
                 response.succeed(infoContent);
             }
+        }
+        return response;
+    }
+
+    @RequestMapping(path = "/article/top", method = {RequestMethod.POST})
+    @ApiOperation(value = "设置文章置顶标志（权限）", notes = "设置置顶或取消置顶")
+    @PermissionRequired(description = "置顶或取消置顶权限")
+    public BaseResponse<Object> setArticleTop(@RequestParam(value = "articleId") @Valid Long articleId,
+                                                  @RequestParam(value = "top") @Valid Boolean top) {
+        BaseResponse response = new BaseResponse<>();
+        if (articleService.setArticleTop(articleId, top)) {
+            response.succeed(null);
+        } else {
+            response.failed("set top failed", 0);
         }
         return response;
     }

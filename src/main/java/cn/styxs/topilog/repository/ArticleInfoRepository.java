@@ -1,6 +1,8 @@
 package cn.styxs.topilog.repository;
 
-import cn.styxs.topilog.model.ArticleInfo;
+import cn.styxs.topilog.model.article.ArticleInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -12,4 +14,10 @@ import java.util.List;
  */
 public interface ArticleInfoRepository extends CrudRepository<ArticleInfo, Long> {
     List<ArticleInfo> findAllByOrderByCreateTime();
+
+    Page<ArticleInfo> findAllBy(Pageable pageable);
+
+    Page<ArticleInfo> findAllByIdNotIn(List<Long> ids,Pageable pageable);
+
+    List<ArticleInfo> findAllByIdIsIn(List<Long> ids);
 }
