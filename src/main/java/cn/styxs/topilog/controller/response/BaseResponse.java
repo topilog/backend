@@ -16,9 +16,9 @@ import lombok.ToString;
 @ToString
 public class BaseResponse<T> {
     private boolean status;
-    @ApiModelProperty(value = "业务层状态", notes = "0表示成功")
+    @ApiModelProperty(value = "业务层错误码", notes = "0表示成功")
     private int upCode;
-    @ApiModelProperty(value = "下层状态", notes = "0表示成功")
+    @ApiModelProperty(value = "下层错误码", notes = "0表示成功")
     private int baseCode;
     private String description;
     // 承载请求结果

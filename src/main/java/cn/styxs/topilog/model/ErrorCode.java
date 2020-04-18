@@ -11,6 +11,8 @@ public class ErrorCode {
         public static final int kNeedPermission = 2;    // 需要权限
     }
 
+    public static final int kIllegalArgument = 100;   // 不合法的参数
+    /////////////   以下为业务层错误码
     public class Article {
         public static final int kArticleIdError = 1;    // 文章Id错误
     }

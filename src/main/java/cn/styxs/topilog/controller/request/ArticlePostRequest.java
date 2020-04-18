@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -22,11 +24,15 @@ import java.util.List;
 public class ArticlePostRequest extends UserRequest {
     @ApiModelProperty(value = "文章标题", required = true)
     @NotNull
+    @NotEmpty
+    @Size(max = ArticleInfo.kArticleTitleLength)
     String title;
     @ApiModelProperty(value = "文章内容", required = true)
     @NotNull
+    @NotEmpty
     String content;
     @ApiModelProperty(value = "文章展示摘要", required = false)
+    @Size(max = ArticleInfo.kArticleSummaryLength)
     String summary;
     @ApiModelProperty(value = "文章分类数组", notes = "如果是目前不存在的分类将自动创建新分类")
     List<String> tags;
