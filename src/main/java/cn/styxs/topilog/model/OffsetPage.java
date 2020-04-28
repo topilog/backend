@@ -9,21 +9,21 @@ import org.springframework.data.domain.Sort;
  * @Description: 实现了一个基于偏移量的分页
  */
 public class OffsetPage implements Pageable {
-    private int offset;
+    private long offset;
     private int limit;
     private final Sort sort;
-    public OffsetPage(int offset, int limit, Sort sort) {
+    public OffsetPage(long offset, int limit, Sort sort) {
         this.offset = offset;
         this.limit = limit;
         this.sort = sort;
     }
-    public OffsetPage(int offset, int limit) {
+    public OffsetPage(long offset, int limit) {
         this(offset, limit, Sort.by(Sort.DEFAULT_DIRECTION, "id"));
     }
 
     @Override
     public int getPageNumber() {
-        return offset / limit;
+        return (int) offset / limit;
     }
 
     @Override
